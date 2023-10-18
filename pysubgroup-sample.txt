@@ -1,0 +1,95 @@
+pysubgroup is a Python library for subgroup discovery in data mining. It helps identify interesting subgroups within a dataset based on specified quality measures. Here are some basic examples of how to use pysubgroup:
+
+1. Install pysubgroup:
+
+You can install pysubgroup using pip:
+
+bash
+
+pip install pysubgroup
+
+2. Importing the Library:
+
+You need to import the necessary modules from pysubgroup to work with subgroup discovery.
+
+python
+
+from pysubgroup import SubgroupDiscoveryTask, g, create_selectors
+
+3. Loading a Dataset:
+
+Let's assume you have a dataset in the form of a Pandas DataFrame. You can load it into your Python environment.
+
+python
+
+import pandas as pd
+
+# Load your dataset as a Pandas DataFrame
+data = pd.read_csv('your_dataset.csv')
+
+4. Define Quality Measures:
+
+Quality measures help you evaluate the interestingness of subgroups. You can use built-in measures like g for gain or define custom measures.
+
+python
+
+# Example: Define a quality measure using the `g` function
+measure = g
+
+5. Subgroup Discovery Task:
+
+You create a subgroup discovery task by specifying the target attribute, quality measure, and search space.
+
+python
+
+# Example: Create a subgroup discovery task
+task = SubgroupDiscoveryTask(
+    data,
+    target='target_column',  # Replace with your target variable
+    search_space=create_selectors(data, ignore=['target_column']),  # Define feature selectors
+    result_set_size=5,  # Maximum number of results to return
+    depth=2  # Maximum depth of subgroup description
+)
+
+6. Running Subgroup Discovery:
+
+You can now execute subgroup discovery to find interesting subgroups.
+
+python
+
+# Execute subgroup discovery
+result = task.search(measure)
+
+7. Viewing the Results:
+
+You can access the discovered subgroups and view their descriptions and quality measures.
+
+python
+
+for (q, sg) in result:
+    print(f'Subgroup: {sg}')
+    print(f'Quality: {q:.3f}')
+
+8. Custom Quality Measures:
+
+You can define custom quality measures to assess the interestingness of subgroups based on your specific requirements.
+
+python
+
+def custom_measure(data, subgroup, target):
+    # Your custom quality measure logic
+    return your_quality_score
+
+# Example: Use your custom measure in the SubgroupDiscoveryTask
+task = SubgroupDiscoveryTask(
+    data,
+    target='target_column',
+    search_space=create_selectors(data, ignore=['target_column']),
+    result_set_size=5,
+    depth=2,
+    quality_measure=custom_measure
+)
+
+result = task.search()
+
+These are basic examples of how to use pysubgroup for subgroup discovery in Python. The library provides many advanced features for exploring and analyzing subgroups within your data. Be sure to consult the official documentation and further examples for more advanced use cases: pysubgroup Documentation.
